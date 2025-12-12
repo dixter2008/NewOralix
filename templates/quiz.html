@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <title>Oralix Quiz</title>
+  <link rel="icon" type="image/png" href="{{ url_for('static', filename='img/title pic.png') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/homedesign.css') }}" />
+</head>
+<body>
+  <nav class="navbar">
+    <div class="nav-left">
+    <a class="nav-logo-pill" href="{{ url_for('home') }}"></a>
+        <img src="{{ url_for('static', filename='img/logo.png') }}" class="logo-icon" alt="Oralix logo" />
+        <span class="nav-title">Oralix</span>
+      </button>
+    </div>
+    <div class="nav-center">
+      <a href="{{ url_for('home') }}" class="nav-link">Home</a>
+      <a href="{{ url_for('about') }}" class="nav-link">About</a>
+      <a href="{{ url_for('contact') }}" class="nav-link">Contact</a>
+    </div>
+    <div class="nav-right">
+    <a class="nav-cta" href="{{ url_for('home') }}">Back to Chat</a>
+    </div>
+    <div class="hamburger">
+      <span class="bar"></span>
+      <span class="bar"></span>
+      <span class="bar"></span>
+    </div>
+  </nav>
+  <div class="mobile-nav" id="mobile-nav">
+    <a href="{{ url_for('home') }}" class="mobile-nav-link">Home</a>
+    <a href="{{ url_for('about') }}" class="mobile-nav-link">About</a>
+    <a href="{{ url_for('contact') }}" class="mobile-nav-link">Contact</a>
+  </div>
+
+  <main class="chat-wrapper">
+    <section class="chat-header">
+      <h1>Medium Difficulty Quiz</h1>
+      <p>Answer all multiple-choice questions. Each question has one correct answer. Submit to see your score and explanations.</p>
+    </section>
+    <section id="quiz-container" class="chat-window">
+      <div class="message assistant">
+        <div class="message-avatar">AI</div>
+        <div class="message-content" id="quiz-status">Loading quiz...</div>
+      </div>
+    </section>
+    <section class="chat-input-area" id="quiz-actions" style="display:none;">
+      <button id="submit-quiz" class="primary-btn">Submit Quiz</button>
+      <button id="retry-quiz" class="primary-btn" style="margin-left:8px;">Regenerate Quiz</button>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-column">
+      <h3>Oralix Quiz Mode</h3>
+      <p>This quiz was generated automatically from your last summary.</p>
+    </div>
+    <p class="footer-bottom">© 2025 Oralix. All rights reserved.</p>
+  </footer>
+  <script src="{{ url_for('static', filename='js/quizscript.js') }}"></script>
+</body>
+</html>

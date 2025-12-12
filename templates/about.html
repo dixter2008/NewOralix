@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <title>About Us</title>
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='img/title pic.png') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/homedesign.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/aboutdesign.css') }}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-left">
+            <button class="nav-logo-pill" type="button">
+                <img src="{{ url_for('static', filename='img/logo.png') }}" class="logo-icon" alt="Oralix logo">
+                <span class="nav-title">Oralix</span>
+            </button>
+        </div>
+
+        <div class="nav-center">
+            <a href="{{ url_for('home') }}" class="nav-link">Home</a>
+            <a href="{{ url_for('about') }}" class="nav-link">About</a>
+            <a href="{{ url_for('contact') }}" class="nav-link">Contact</a>
+        </div>
+
+        <div class="nav-right">
+            <button class="nav-cta" type="button">New Session</button>
+        </div>
+
+        <div class="hamburger">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </div>
+    </nav>
+
+    <div class="mobile-nav" id="mobile-nav">
+        <a href="{{ url_for('home') }}" class="mobile-nav-link">Home</a>
+        <a href="{{ url_for('about') }}" class="mobile-nav-link">About</a>
+        <a href="{{ url_for('contact') }}" class="mobile-nav-link">Contact</a>
+    </div>
+
+    <div class="page-wrapper">
+        <div class="about-box">
+            <p>
+                <strong>About This Project:</strong><br><br>
+                Oralix is a student-friendly Text-to-Speech tool that also summarizes 
+                written text. Designed to help learners who prefer to listen instead of read, 
+                this web app makes studying easier and more accessible. It’s especially useful
+                for auditory learners or those who want quick summaries of long content. 
+                This website is part of our research project as Computer Programming students. 
+                Our goal is to develop a useful tool that supports auditory learning and improves 
+                access to information through text-to-speech and summarization features. 
+                This project demonstrates our skills in web development, user experience design, 
+                and real-world problem-solving.
+            </p>
+        </div>
+    </div>
+    <script src="{{ url_for('static', filename='js/hamburger.js') }}"></script>
+</body>
+</html>

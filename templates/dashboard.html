@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <title>Dashboard - Oralix</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/homedesign.css') }}" />
+</head>
+<body>
+  <nav class="navbar">
+    <div class="nav-left">
+    <a class="nav-logo-pill" href="{{ url_for('home') }}">
+        <img src="{{ url_for('static', filename='img/logo.png') }}" class="logo-icon" alt="logo" />
+        <span class="nav-title">Oralix</span>
+    </a>
+    </div>
+    <div class="nav-center">
+      <a href="{{ url_for('home') }}" class="nav-link">Home</a>
+      <a href="{{ url_for('about') }}" class="nav-link">About</a>
+      <a href="{{ url_for('contact') }}" class="nav-link">Contact</a>
+    </div>
+    <div class="nav-right">
+      <a class="nav-link" href="{{ url_for('logout') }}">Logout ({{ username }})</a>
+    </div>
+  </nav>
+  <main class="chat-wrapper" style="max-width:1200px;">
+    <section class="chat-header">
+      <h1>{{ username }}'s Dashboard</h1>
+      <p>Your saved summaries and quiz activity.</p>
+    </section>
+
+    <section class="message assistant" style="flex-direction:column; gap:16px;">
+      <div class="message-content">
+        <h2 style="margin:4px 0 8px;">Recent Summaries</h2>
+        <div style="max-height:240px; overflow:auto; border:1px solid #2a2f36; border-radius:8px; padding:12px;">
+          {% if summaries %}
+            <ul style="list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:10px;">
+              {% for s in summaries %}
+                <li style="background:#1f2329; padding:10px; border-radius:6px;">
+                  <div style="font-size:0.75rem; opacity:0.6;">ID {{ s.id }} • {{ s.created_at }}</div>
+                  <div style="margin-top:6px; font-weight:600;">Input:</div>
+                  <div style="font-size:0.85rem; white-space:pre-wrap;">{{ s.input_text }}</div>
+                  <div style="margin-top:6px; font-weight:600;">Summary:</div>
+                  <div style="font-size:0.85rem; white-space:pre-wrap;">{{ s.summary_text }}</div>
+                </li>
+              {% endfor %}
+            </ul>
+          {% else %}
+            <p style="opacity:0.7;">No summaries yet.</p>
+          {% endif %}
+        </div>
+      </div>
+
+      <div class="message-content">
+        <h2 style="margin:4px 0 8px;">Generated Quizzes</h2>
+        <div style="max-height:240px; overflow:auto; border:1px solid #2a2f36; border-radius:8px; padding:12px;">
+          {% if quizzes %}
+            <ul style="list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:10px;">
+              {% for q in quizzes %}
+                <li style="background:#1f2329; padding:10px; border-radius:6px;">
+                  <div style="font-size:0.75rem; opacity:0.6;">Quiz ID {{ q.id }} • {{ q.created_at }}</div>
+                  <div style="margin-top:6px; font-size:0.8rem; opacity:0.8;">Questions stored.</div>
+                  <form method="POST" action="{{ url_for('generate_quiz') }}" style="margin-top:8px;">
+                    <input type="hidden" name="quiz_id" value="{{ q.id }}" />
+                  </form>
+                </li>
+              {% endfor %}
+            </ul>
+          {% else %}
+            <p style="opacity:0.7;">No quizzes generated yet.</p>
+          {% endif %}
+        </div>
+      </div>
+
+      <div class="message-content">
+        <h2 style="margin:4px 0 8px;">Quiz Attempts</h2>
+        <div style="max-height:480px; overflow:auto; border:1px solid #2a2f36; border-radius:8px; padding:12px;">
+          {% if attempts %}
+            <ul style="list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:10px;">
+              {% for a in attempts %}
+                <li style="background:#1f2329; padding:10px; border-radius:6px;">
+                  <div style="font-size:0.75rem; opacity:0.6;">Attempt ID {{ a.id }} • {{ a.created_at }}</div>
+                  <div style="margin-top:6px; font-size:0.85rem;">Score: {{ a.score }} / {{ a.total }}</div>
+                  {% set quiz = quiz_map.get(a.quiz_id) %}
+                  {% if quiz and quiz.questions %}
+                    <details style="margin-top:8px;">
+                      <summary style="cursor:pointer;">Show questions and answers</summary>
+                      <div style="margin-top:8px; display:flex; flex-direction:column; gap:8px;">
+                        {% for q in quiz.questions %}
+                          {% set i = loop.index0 %}
+                          {% set user_idx = (a.answers[i] if a.answers and i < a.answers|length else None) %}
+                          {% set correct_idx = q.answer_index %}
+                          <div style="background:#161a20; padding:10px; border-radius:6px;">
+                            <div style="font-weight:600;">Q{{ i+1 }}. {{ q.question }}</div>
+                            <div style="margin-top:6px; font-size:0.85rem;">
+                              <strong>Your answer:</strong>
+                              {% if user_idx is not none %}
+                                {{ q.choices[user_idx] }}
+                              {% else %}
+                                <em>no answer</em>
+                              {% endif %}
+                            </div>
+                            <div style="margin-top:4px; font-size:0.85rem;">
+                              <strong>Correct answer:</strong> {{ q.choices[correct_idx] }}
+                            </div>
+                          </div>
+                        {% endfor %}
+                      </div>
+                    </details>
+                  {% else %}
+                    <div style="margin-top:6px; opacity:0.7; font-size:0.85rem;">Quiz content unavailable.</div>
+                  {% endif %}
+                </li>
+              {% endfor %}
+            </ul>
+          {% else %}
+            <p style="opacity:0.7;">No attempts yet.</p>
+          {% endif %}
+        </div>
+      </div>
+
+    </section>
+  </main>
+</body>
+</html>

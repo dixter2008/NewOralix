@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <title>Login - Oralix</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/homedesign.css') }}" />
+</head>
+<body>
+  <nav class="navbar">
+    <div class="nav-left">
+      <a class="nav-logo-pill" href="{{ url_for('home') }}">
+        <img src="{{ url_for('static', filename='img/logo.png') }}" class="logo-icon" alt="logo" />
+        <span class="nav-title">Oralix</span>
+      </a>
+    </div>
+    <div class="nav-center">
+      <a href="{{ url_for('home') }}" class="nav-link">Home</a>
+      <a href="{{ url_for('about') }}" class="nav-link">About</a>
+      <a href="{{ url_for('contact') }}" class="nav-link">Contact</a>
+    </div>
+    <div class="nav-right">
+      <a href="{{ url_for('register') }}" class="nav-link">Register</a>
+    </div>
+  </nav>
+  <main class="chat-wrapper" style="max-width:560px;">
+    <section class="chat-header">
+      <h1>Login</h1>
+      <p>Access your saved summaries and quizzes.</p>
+    </section>
+    <section class="message assistant" style="flex-direction:column;">
+      <form method="POST" style="width:100%; display:flex; flex-direction:column; gap:12px;">
+        {% if error %}
+          <div style="color:#f44336; font-size:0.9rem;">{{ error }}</div>
+        {% endif %}
+        <label style="display:flex; flex-direction:column; gap:4px;">
+          <span>Username</span>
+          <input required name="username" type="text" class="chat-input" style="height:42px;" />
+        </label>
+        <label style="display:flex; flex-direction:column; gap:4px;">
+          <span>Password</span>
+          <input required name="password" type="password" class="chat-input" style="height:42px;" />
+        </label>
+        <button class="primary-btn" type="submit">Login</button>
+      </form>
+    </section>
+  </main>
+</body>
+</html>
